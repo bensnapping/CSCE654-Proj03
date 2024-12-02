@@ -1,0 +1,77 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="style.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+		<title>
+			Project 2
+		</title>
+    	<script type="text/javascript" src="https://rawgit.com/patriciogonzalezvivo/glslCanvas/master/dist/GlslCanvas.js"></script>
+		<style>
+        canvas {
+            display: block;
+            width: 75%;
+        }
+    </style>
+	</head>
+
+	<body>
+		<div class="bar_padding">
+			<div class="bar">
+				<h2 class="menubar_header">CSCE 654 - Project 3</h2>
+				<div class="menubar">
+					<div class="menubar_elem"><a href="http://people.tamu.edu/~zhenglin_li/" class="menubar_link">Zhenglin Li</a></div>
+					<div class="menubar_elem"><a href="http://people.tamu.edu/~mareksam/viza654/" class="menubar_link">Sarah Marek</a></div>
+					<div class="menubar_elem"><a href="https://people.tamu.edu/~benjaminmoder/" class="menubar_link">Ben Moder</a></div>
+				</div>
+			</div>
+		</div>
+		<div class="content_padding">
+			<div class="content">
+				<h1>Project 3</h1>
+				<h2>Post-Impressionist Environment Utensils</h2>
+
+    			<canvas class="glslCanvas" data-fragment-url="shader.frag", data-textures="imgs/environment.png,imgs/paint_normals3.png,imgs/light_colors.png,imgs/reflective.png,imgs/shadow_colors.png,imgs/height.png"></canvas>
+				<div class="spacer"></div>
+
+				<div class="row">
+					<div class="column">
+						<p>In this project, we're aiming to create a still-life of a set of chrome utensils, and use them as an interactive lens through which to view a Van Gogh-inspired environment.</p>
+						
+						<h3>Technical Info</h3>
+
+						<p>From a technical perspective, we plan on allowing the user to rotate the scene around the still-life with movement of their mouse in a circle around the center of the screen. In terms of interactivity, we were inspired by viewing tools that use HDRI images, and visual development demos that rotate those HDRIs around a specific model or surface.
+						<br>
+						<br>
+						Since we were inspired by HDRIs, we plan on tying our scene lighting information to the rotating environment painting, either by encoding that information in another image (similar to how specularity or reflectivity information is stored in the class examples), or by identifying coordinates on the image and using those as the source positions for our lighting calculations.</p>
+						
+						<h3>Artistic Info</h3>
+						
+						<p>From an artistic perspective, we plan on keeping the camera top-down, and quite tight around the still-life subjects. This allows the details of the normal map and specular/roughness information to shine through, and allows the reflective surfaces to be larger in the frame-- and thus provide a clearer picture of the environment as it moves.
+						<br>
+						<br>
+						In terms of perspective, the painting will be looking up away from the still life, perhaps past brightly lit skyscrapers or fireflies in a marshy setting. Since the silverware will be in such close focus, we've also thrown around the idea of painting their normal maps in a more stylized manner to tie it better to the environment. We'll test, and implement this decision if it still works artistically.</p>
+					</div>
+					<div class="column">
+						<div class="polaroid">
+							<img src="https://render.fineartamerica.com/images/rendered/medium/print/6.5/8/break/images-medium-5/berkeley-square-silverware-martin-bruehl.jpg" alt="A Test Image" width=50%>
+							<div class="polaroid_note">
+								An example of the base image
+							</div>
+						</div>
+						<div class="spacer"></div>
+						<div class="polaroid_alt">
+							<img src="https://www.minimastersart.com/cdn/shop/articles/Why_Van_Gogh_s_Cafe_Terrace_at_Night_Captivates_Art_Lovers_981x.webp?v=1716921326" alt="A Test Image" width=50%>
+							<div class="polaroid_note">
+								An example of the post-impressionist environment painting
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</body>
+</html>
