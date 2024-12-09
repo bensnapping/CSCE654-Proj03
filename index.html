@@ -5,9 +5,9 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 		<title>
-			Project 2
+			Project 3
 		</title>
-    	<script type="text/javascript" src="https://rawgit.com/patriciogonzalezvivo/glslCanvas/master/dist/GlslCanvas.js"></script>
+		<script type="text/javascript" src="https://rawgit.com/patriciogonzalezvivo/glslCanvas/master/dist/GlslCanvas.js"></script>
 		<style>
         canvas {
             display: block;
@@ -32,46 +32,152 @@
 				<h1>Project 3</h1>
 				<h2>Post-Impressionist Environment Utensils</h2>
 
-    			<canvas class="glslCanvas" data-fragment-url="shader.frag", data-textures="imgs/environment.png,imgs/paint_normals3.png,imgs/light_colors.png,imgs/reflective.png,imgs/shadow_colors.png,imgs/height.png"></canvas>
+    			<!-- The WebGL Shader -->
+				<canvas id="glslCanvas" data-fragment-url="shader.frag", data-textures="imgs/final_environment.png,imgs/final_normals.png,imgs/final_light.png,imgs/final_reflect.png,imgs/final_dark.png,imgs/final_depth.png"></canvas>
+				<div class="slidecontainer">
+					<p>Reflection Rotation:</p>
+					<input type="range" min="0" max="100" value="50" class="slider" id="environmentSlider" style="width: 100%">
+				</div>
+				<div class="slidecontainer">
+					<p>Gamma:</p>
+					<input type="range" min="0" max="100" value="50" class="slider" id="gammaSlider" style="width: 100%">
+				</div>
 				<div class="spacer"></div>
 
+				<!-- The Text Information -->
+				<p>In this project, we aimed to capture the painterly aesthetic and vibrant colors of Van Gogh's <a href="https://www.vangoghmuseum.nl/en/collection/s0047V1962">The Bedroom</a> and <a href="https://krollermuller.nl/en/vincent-van-gogh-terrace-of-a-cafe-at-night-place-du-forum-1">Café Terrace at Night</a> while allowing a viewer to explore reflections and lighting in such a space.</p>
+				
+				<h3>Handling the Component Images</h3>
+				
 				<div class="row">
 					<div class="column">
-						<p>In this project, we're aiming to create a still-life of a set of chrome utensils, and use them as an interactive lens through which to view a Van Gogh-inspired environment.</p>
-						
-						<h3>Technical Info</h3>
+						<p>From a technical perspective, we composed this shader from six (6) image maps:</p>
+						<ul>
+							<li>Normal Map</li>
+							<li>Depth Map</li>
+							<li>Reflectivity Map</li>
+							<li>Light Color Map</li>
+							<li>Dark Color Map</li>
+						</ul>
 
-						<p>From a technical perspective, we plan on allowing the user to rotate the scene around the still-life with movement of their mouse in a circle around the center of the screen. In terms of interactivity, we were inspired by viewing tools that use HDRI images, and visual development demos that rotate those HDRIs around a specific model or surface.
-						<br>
-						<br>
-						Since we were inspired by HDRIs, we plan on tying our scene lighting information to the rotating environment painting, either by encoding that information in another image (similar to how specularity or reflectivity information is stored in the class examples), or by identifying coordinates on the image and using those as the source positions for our lighting calculations.</p>
-						
-						<h3>Artistic Info</h3>
-						
-						<p>From an artistic perspective, we plan on keeping the camera top-down, and quite tight around the still-life subjects. This allows the details of the normal map and specular/roughness information to shine through, and allows the reflective surfaces to be larger in the frame-- and thus provide a clearer picture of the environment as it moves.
-						<br>
-						<br>
-						In terms of perspective, the painting will be looking up away from the still life, perhaps past brightly lit skyscrapers or fireflies in a marshy setting. Since the silverware will be in such close focus, we've also thrown around the idea of painting their normal maps in a more stylized manner to tie it better to the environment. We'll test, and implement this decision if it still works artistically.</p>
+						<p>The process of creating these maps began in Blender. First, we created simple utensil models based on our inspiration photo, and layed them out on a plane. Then we created a material that converts the world-space normal information into camera-space, and outputs those converted normals as color on the assigned objects.</p>
 					</div>
 					<div class="column">
 						<div class="polaroid">
-							<img src="https://render.fineartamerica.com/images/rendered/medium/print/6.5/8/break/images-medium-5/berkeley-square-silverware-martin-bruehl.jpg" alt="A Test Image" width=50%>
+							<img src="imgs/shader_graph.png" width=50%>
 							<div class="polaroid_note">
-								An example of the base image
-							</div>
-						</div>
-						<div class="spacer"></div>
-						<div class="polaroid_alt">
-							<img src="https://www.minimastersart.com/cdn/shop/articles/Why_Van_Gogh_s_Cafe_Terrace_at_Night_Captivates_Art_Lovers_981x.webp?v=1716921326" alt="A Test Image" width=50%>
-							<div class="polaroid_note">
-								An example of the post-impressionist environment painting
+								The shadergraph information for the normals material.
 							</div>
 						</div>
 					</div>
 				</div>
+				<div class="spacer"></div>
 
+				<p>To get the painterly effect, we used the <a href="https://tradigital.gumroad.com/l/lpqoz?layout=profile">Tradigital Live Paint Filter Plugin</a> on top of the Blender scene in order to render out that normal information as though it had been painted by hand. Having these normals faceted in such a way allows the light information to bounce for an entire stroke rather than just for a pixel, and is a key component of the painterly aesthetic we were attempting to emulate.</p>
+				
+				<div class="polaroid_alt">
+					<img src="imgs/final_normals.png" width=50%>
+					<div class="polaroid_note">
+						The final normal map.
+					</div>
+				</div>
+				<div class="spacer"></div>
+
+				<p>In the same vein, we used the Live Paint Filter with simple, emissive color materials in order to generate the Light and Dark Color Maps. Initially, we just used hypothetical diffuse color information for the light color map, then darkened that for the dark color map. After experimentation, though, we found that the results were closer to Van Gogh's work if we instead treated the light color map as a highly saturated color mostly abstracted from the material properties, then chose the dark colors by lowering the value and shifting the hue to a cooler color (making sure to maintain a high saturation).</p>
+
+				<div class="row">
+					<div class="column">
+						<div class="polaroid">
+							<img src="imgs/final_light.png" width=50%>
+							<div class="polaroid_note">
+								The final light color map
+							</div>
+						</div>
+					</div>
+					<div class="column">
+						<div class="polaroid_alt">
+							<img src="imgs/final_dark.png" width=50%>
+							<div class="polaroid_note">
+								The final dark color map.
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="spacer"></div>
+
+				<p>The depth map was used to generate the cast shadow information in the final shader, and the reflectivity map was used to define which parts of the image would be treated as reflective surfaces.
+				<br>
+				<br>
+				These two maps were not created using the Live Paint Filter primarily for stylistic reasons. We found in testing that there was more interesting material interactions when the reflectivity map was separated from the paint strokes. It resulted in small instances where the reflectivity within one stroke seems to ramp up or down and reminded us of the cases where a stroke of paint might transition from one color to another as it blends.
+				<br>
+				<br>
+				Instead, the depth map was generated by outputting a depth pass from blender and remapping it from meters to a 0.0-1.0 color scale, and the reflectivity map was created by just outputting an alpha pass of just the utensil geometry.</p>
+				
+				<div class="row">
+					<div class="column">
+						<div class="polaroid_alt">
+							<img src="imgs/final_depth.png" width=50%>
+							<div class="polaroid_note">
+								The final depth map
+							</div>
+						</div>
+					</div>
+					<div class="column">
+						<div class="polaroid">
+							<img src="imgs/final_reflect.png" width=50%>
+							<div class="polaroid_note">
+								The final reflectivity map.
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="spacer"></div>
+
+				<p>In addition to those six maps, we also painted our own image for the environment that could then be reflected in the utensils. This painting was heavily based on the aforementioned <i>Café Terrace at Night</i>, and we chose the palette based on a combination of that painting with the colors we were getting from our lilght and dark color maps (which themselves were based on <i>Café Terrace at Night</i>).
+				<br>
+				<br>
+				We attempted two ways of having the user manipulate the environment, and two methods of transforming the environment map. First, we applied 2D rotation transformations on the environment map based on the X position of the user's mouse in the window. This worked, but was unwieldy due to the user <i>also</i> controlling the light with their mouse position. For these reasons, we switched to manipulating the rotation via a slider beneath the WebGL window.
+				<br>
+				<br>
+				Once we had better control over the rotations, we realized that having the image rotate in 2D wasn't providing a very coherent output. Since we were partially inspired by the "visual development" (V-Dev) rigs seen in animation and game development, we decided to switch tracks and rotate the environment map around the scene as though it were on the interior of a cylinder. In order to approximate this effect, we instead tied the left-right <i>transformation</i> of the environment to the slider (looping the uv information with a modulo operation).</p>
+
+				<div class="row">
+					<div class="column">
+						<div class="polaroid">
+							<img src="https://krollermuller.nl/media/cache/collection_item_detail_large/media/collectionitempage/tmsImage/caf-terras-bij-nacht-place-du-forum-vincent-van-gogh-44529-copyright-kroller-muller-museum.jpg?17e1159c8637" alt="A Test Image" width=50%>
+							<div class="polaroid_note">
+								Van Gogh's <i>Café Terrace at Night</i>
+							</div>
+						</div>
+					</div>
+					<div class="column" style="flex:80%">
+						<div class="polaroid_alt">
+							<img src="imgs/final_environment.png" width=50%>
+							<div class="polaroid_note">
+								Our finished environment painting.
+							</div>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 
 	</body>
+	<script>
+        var canvas = document.getElementById("glslCanvas");
+        var sandbox = new GlslCanvas(canvas);
+		canvas.style.width = '100%';
+		sandbox.resize();
+
+		var gamma_slider = document.getElementById("gammaSlider");
+		gamma_slider.oninput = function() {
+			sandbox.setUniform("u_gamma", Number(this.value)); 
+		}
+		
+		var env_slider = document.getElementById("environmentSlider");
+		env_slider.oninput = function() {
+			sandbox.setUniform("u_env_rot", Number(this.value)); 
+		}
+    </script>
 </html>

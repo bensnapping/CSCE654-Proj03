@@ -120,16 +120,6 @@ a:hover.menubar_link, .menubar_link_active {
  * Polaroids
  */
 
-@keyframes polaroid {
-	from {transform: rotate(-2deg);}
-	to {transform: rotate(2deg);}
-}
-
-@keyframes polaroid-hover {
-	from {transform: rotate(2deg);}
-	to {transform: rotate(-2deg);}
-}
-
 div.polaroid {
 	width: 50%;
 	background-color: var(--light);
@@ -137,29 +127,6 @@ div.polaroid {
 	transform: rotate(2deg);
 	margin-left: auto;
 	margin-right: auto;
-	animation-name: polaroid;
-	animation-duration: 0.2s;
-}
-
-div.polaroid:hover {
-	width: 50%;
-	background-color: var(--light);
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	transform: rotate(-2deg);
-	margin-left: auto;
-	margin-right: auto;
-	animation-name: polaroid-hover;
-	animation-duration: 0.2s;
-}
-
-@keyframes polaroid-alt {
-	from {transform: rotate(2deg);}
-	to {transform: rotate(-2deg);}
-}
-
-@keyframes polaroid-alt-hover {
-	from {transform: rotate(-2deg);}
-	to {transform: rotate(2deg);}
 }
 
 div.polaroid_alt {
@@ -169,19 +136,6 @@ div.polaroid_alt {
 	transform: rotate(-2deg);
 	margin-left: auto;
 	margin-right: auto;
-	animation-name: polaroid-alt;
-	animation-duration: 0.2s;
-}
-
-div.polaroid_alt:hover {
-	width: 50%;
-	background-color: var(--light);
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	transform: rotate(2deg);
-	margin-left: auto;
-	margin-right: auto;
-	animation-name: polaroid-alt-hover;
-	animation-duration: 0.2s;
 }
 
 div.polaroid img, div.polaroid_alt img {
